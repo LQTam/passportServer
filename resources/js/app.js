@@ -35,12 +35,58 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue').default
 );
 
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import routes from './routes';
+import NavBarComponent from './components/NavBarComponent.vue';
+// import 'es6-promise/auto' //require for Vuex
+import store from './store/index';
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+  routes,
+  mode:'history'
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!store.getters.loggedIn) {
+      next({
+        name:"login",
+      })
+    } else {
+      next()
+    }
+  }else if (to.matched.some(record => record.meta.requiresVisitor)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (store.getters.loggedIn) {
+      next({
+        name:"app",
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
+})
+
+let app = new Vue({
+  el: '#app',
+  store,
+  router: router,
+  components: {
+    NavBarComponent
+  },
 });
