@@ -13,13 +13,13 @@
 
                             <div class="col-md-6">
                                 <input id="name" type="text"
-                                 class="form-control  is-invalid "
-                                  name="name" value="" 
+                                 class="form-control   " :class="{'is-invalid':isError}"
+                                  name="name"  
                                   v-model="name"
                                    autocomplete="name" autofocus>
 
                                 
-                                    <span class="invalid-feedback" role="alert">
+                                    <span :class="{'invalid-feedback':isError}" role="alert">
                                         <strong></strong>
                                     </span>
                             </div>
@@ -30,13 +30,13 @@
 
                             <div class="col-md-6">
                                 <input id="email" type="email" 
-                                class="form-control  is-invalid "
-                                 name="email" value="" 
+                                class="form-control   " :class="{'is-invalid':isError}"
+                                 name="email"
                                  v-model="email"
                                   autocomplete="email">
 
                                 
-                                    <span class="invalid-feedback" role="alert">
+                                    <span :class="{'invalid-feedback':isError}" role="alert">
                                         <strong></strong>
                                     </span>
                                 
@@ -48,13 +48,13 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password"
-                                 class="form-control  is-invalid "
+                                 class="form-control   " :class="{'is-invalid':isError}"
                                   name="password" 
                                   v-model="password"
                                    autocomplete="new-password">
 
                                 
-                                    <span class="invalid-feedback" role="alert">
+                                    <span :class="{'invalid-feedback':isError}" role="alert">
                                         <strong></strong>
                                     </span>
                                 
@@ -96,7 +96,14 @@ export default {
             name:'',
             email:'',
             password:'',
-            password_confirmation:''
+            password_confirmation:'',
+            errors:[],
+        }
+    },
+
+    computed: {
+        isError(){
+            return this.errors.length > 0;
         }
     },
     methods: {
@@ -109,6 +116,9 @@ export default {
             })
             .then(res=>{
                 this.$router.push({ name:'login' });
+            })
+            .catch(err=>{
+                console.log(err.response);
             });
         }
     },
