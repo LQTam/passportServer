@@ -2165,8 +2165,14 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      errors: []
     };
+  },
+  computed: {
+    isError: function isError() {
+      return this.errors.length > 0;
+    }
   },
   methods: {
     register: function register() {
@@ -2181,6 +2187,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$router.push({
           name: 'login'
         });
+      })["catch"](function (err) {
+        _this.errors = err.response.data.errors;
       });
     }
   }
@@ -39499,12 +39507,12 @@ var render = function() {
                           expression: "name"
                         }
                       ],
-                      staticClass: "form-control  is-invalid ",
+                      staticClass: "form-control  ",
+                      class: { "is-invalid": _vm.isError },
                       attrs: {
                         id: "name",
                         type: "text",
                         name: "name",
-                        value: "",
                         autocomplete: "name",
                         autofocus: ""
                       },
@@ -39519,7 +39527,14 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _c(
+                      "span",
+                      {
+                        class: { "invalid-feedback": _vm.isError },
+                        attrs: { role: "alert" }
+                      },
+                      [_c("strong", [_vm._v(_vm._s(_vm.errors.name))])]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
@@ -39543,12 +39558,12 @@ var render = function() {
                           expression: "email"
                         }
                       ],
-                      staticClass: "form-control  is-invalid ",
+                      staticClass: "form-control   ",
+                      class: { "is-invalid": _vm.isError },
                       attrs: {
                         id: "email",
                         type: "email",
                         name: "email",
-                        value: "",
                         autocomplete: "email"
                       },
                       domProps: { value: _vm.email },
@@ -39562,7 +39577,14 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c(
+                      "span",
+                      {
+                        class: { "invalid-feedback": _vm.isError },
+                        attrs: { role: "alert" }
+                      },
+                      [_c("strong", [_vm._v(_vm._s(_vm.errors.email))])]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
@@ -39586,7 +39608,8 @@ var render = function() {
                           expression: "password"
                         }
                       ],
-                      staticClass: "form-control  is-invalid ",
+                      staticClass: "form-control   ",
+                      class: { "is-invalid": _vm.isError },
                       attrs: {
                         id: "password",
                         type: "password",
@@ -39604,7 +39627,14 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _c(
+                      "span",
+                      {
+                        class: { "invalid-feedback": _vm.isError },
+                        attrs: { role: "alert" }
+                      },
+                      [_c("strong", [_vm._v(_vm._s(_vm.errors.password))])]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
@@ -39648,7 +39678,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(0)
               ]
             )
           ])
@@ -39658,36 +39688,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong")]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -58018,8 +58018,8 @@ axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.baseURL = 'http://passport
           resolve(res);
           console.log(res);
         })["catch"](function (err) {
+          console.log(err.response);
           reject(err);
-          console.log(err.response.errors);
         });
       });
     },
