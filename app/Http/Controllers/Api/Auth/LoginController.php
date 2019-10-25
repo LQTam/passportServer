@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
@@ -34,9 +35,11 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        auth()->user()->tokens->each(function($token,$key){
-            $token->delete();
-        });
+        
+        // auth()->user()->tokens->each(function($token,$key){
+        //     // $token->delete();
+        //     // $token->revoke();
+        // });
 
         return response()->json('Logged out successfully.',200);
     }

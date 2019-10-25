@@ -7,32 +7,27 @@
 
           <div class="card-body">
             <form method="POST" action="#" @submit.prevent="login">
-              
               <div class="form-group row">
                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                 <div class="col-md-6">
-                  <!-- <input
-                    id="email"
-                    type="email"
-                    class="form-control" :class="{'is-invalid' : isError}"
-                    name="email"
-                    v-model="email"
-                    autocomplete="email"
-                    autofocus
-                  /> -->
                   <input
                     id="email"
                     type="email"
-                    class="form-control " :class="{'is-invalid' : isError}"
+                    class="form-control"
+                    :class="{'is-invalid' : isError}"
                     name="email"
                     v-model="email"
                     autocomplete="email"
                     autofocus
                   />
-                  <span  v-for="error in errors"  :class="{'invalid-feedback' : isError}" role="alert">
+                  <span
+                    v-for="error in errors"
+                    :class="{'invalid-feedback' : isError}"
+                    role="alert"
+                  >
                     <strong>{{error}}</strong>
-                </span>
+                  </span>
                 </div>
               </div>
 
@@ -43,7 +38,7 @@
                   <input
                     id="password"
                     type="password"
-                    class="form-control "
+                    class="form-control"
                     name="password"
                     v-model="password"
                   />
@@ -94,9 +89,9 @@ export default {
   },
 
   computed: {
-      isError(){
-          return this.errors.length > 0;
-      }
+    isError() {
+      return this.errors.length > 0;
+    }
   },
   methods: {
     login() {
@@ -112,7 +107,7 @@ export default {
         .catch(err => {
           this.errors.push(err.response.data);
         });
-        this.errors = [];
+      this.errors = [];
     }
   }
 };

@@ -1991,11 +1991,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "login",
   data: function data() {
@@ -2188,7 +2183,7 @@ __webpack_require__.r(__webpack_exports__);
           name: 'login'
         });
       })["catch"](function (err) {
-        _this.errors = err.response.data.errors;
+        _this.errors = err;
       });
     }
   }
@@ -39262,7 +39257,7 @@ var render = function() {
                             expression: "email"
                           }
                         ],
-                        staticClass: "form-control ",
+                        staticClass: "form-control",
                         class: { "is-invalid": _vm.isError },
                         attrs: {
                           id: "email",
@@ -39317,7 +39312,7 @@ var render = function() {
                           expression: "password"
                         }
                       ],
-                      staticClass: "form-control ",
+                      staticClass: "form-control",
                       attrs: {
                         id: "password",
                         type: "password",
@@ -39507,8 +39502,8 @@ var render = function() {
                           expression: "name"
                         }
                       ],
-                      staticClass: "form-control  ",
-                      class: { "is-invalid": _vm.isError },
+                      staticClass: "form-control   ",
+                      class: { "is-invalid": _vm.errors.name },
                       attrs: {
                         id: "name",
                         type: "text",
@@ -39527,14 +39522,16 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        class: { "invalid-feedback": _vm.isError },
-                        attrs: { role: "alert" }
-                      },
-                      [_c("strong", [_vm._v(_vm._s(_vm.errors.name))])]
-                    )
+                    _vm.errors.name
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(_vm.errors.name[0]))])]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -39558,8 +39555,8 @@ var render = function() {
                           expression: "email"
                         }
                       ],
-                      staticClass: "form-control   ",
-                      class: { "is-invalid": _vm.isError },
+                      staticClass: "form-control  ",
+                      class: { "is-invalid": _vm.errors.email },
                       attrs: {
                         id: "email",
                         type: "email",
@@ -39577,14 +39574,16 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        class: { "invalid-feedback": _vm.isError },
-                        attrs: { role: "alert" }
-                      },
-                      [_c("strong", [_vm._v(_vm._s(_vm.errors.email))])]
-                    )
+                    _vm.errors.email
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(_vm.errors.email[0]))])]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -39608,8 +39607,8 @@ var render = function() {
                           expression: "password"
                         }
                       ],
-                      staticClass: "form-control   ",
-                      class: { "is-invalid": _vm.isError },
+                      staticClass: "form-control  ",
+                      class: { "is-invalid": _vm.errors.password },
                       attrs: {
                         id: "password",
                         type: "password",
@@ -39627,14 +39626,25 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        class: { "invalid-feedback": _vm.isError },
-                        attrs: { role: "alert" }
-                      },
-                      [_c("strong", [_vm._v(_vm._s(_vm.errors.password))])]
-                    )
+                    _vm.errors.password
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.errors.password[0] ||
+                                    _vm.errors.password_confirmation[0]
+                                )
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -58018,8 +58028,7 @@ axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.baseURL = 'http://passport
           resolve(res);
           console.log(res);
         })["catch"](function (err) {
-          console.log(err.response);
-          reject(err);
+          reject(err.response.data.errors);
         });
       });
     },
